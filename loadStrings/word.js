@@ -10,7 +10,6 @@ class word
     draw()
     {
         text(this.value, this.posX, this.posY);
-
         this.posY++;
     }
 }

@@ -1,7 +1,7 @@
-let texts;
+let texts = [];
 let words = [];
 
-let wordPrinter;
+let wordPrinter = [];
 
 function preload()
 {
@@ -20,22 +20,20 @@ function setup()
     let arrayWords = texts[index].split(' '); 
     for (let index = 0; index < arrayWords.length; index++) 
     {
-      words.push(arrayWords[index]);
-      wordPrinter = new word(100, 100, words[index]);
+      words.push(new word(random(400), random(-400, 0), arrayWords[index]));
     }
   }
 
   console.log(words);
+
 }
 
-function draw() 
+function draw()
 {
   background(220);
 
-  /*for(let index = 0; index < words.length; index++)
+  for(let index = 0; index < words.length; index++)
   {
-    text(words[index], 250, 250);
-  }*/
-
-  wordPrinter.draw();
+  words[index].draw();
+  }
 }
