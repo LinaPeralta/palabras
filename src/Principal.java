@@ -1,4 +1,3 @@
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
@@ -26,17 +25,15 @@ public class Principal extends PApplet {
 
 	boolean equalsTrue;
 	
-	PrintWriter output;
-	
 	String savedWords;
 	String[] newWords;
+	
+	String otherWords;
+	String[] olderWords;
 
 	@Override
 	public void setup() // void Start
-	{
-		savedWords = "funciona";
-		newWords = split(savedWords, ' ');
-		
+	{	
 		texts = loadStrings("strings.txt");
 		words = new ArrayList<word>();
 		bottomWords = new ArrayList<BottomWords>();
@@ -177,7 +174,15 @@ public class Principal extends PApplet {
 				
 				if(mousePressed && mouseX > 603 && mouseX < 752 && mouseY > 656 && mouseY < 694)
 				{
+					savedWords = bottomWords.get(i).getValue();
+					newWords = split(savedWords, ' ');
 					saveStrings("newStrings.txt", newWords);
+					
+//					otherWords = words.get(i).getValue();
+//					olderWords = split(otherWords, ' ');
+//					saveStrings("newStrings.txt", olderWords);
+					
+
 					exit();
 				}
 			}
