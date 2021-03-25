@@ -27,9 +27,6 @@ public class Principal extends PApplet {
 	
 	String savedWords;
 	String[] newWords;
-	
-	String otherWords;
-	String[] olderWords;
 
 	@Override
 	public void setup() // void Start
@@ -76,7 +73,7 @@ public class Principal extends PApplet {
 
 		textAlign(CENTER);
 		background(142, 168, 145);
-		System.out.println(mouseX + ", " + mouseY);
+		//System.out.println(mouseX + ", " + mouseY);
 
 		fill(0);
 		textSize(15);
@@ -112,6 +109,7 @@ public class Principal extends PApplet {
 		
 		match();
 		saveWords();
+		System.out.println(savedWords);
 	}
 
 	public void mousePressed() 
@@ -153,7 +151,7 @@ public class Principal extends PApplet {
 					words.get(j).setR(255);
 					bottomWords.get(i).setR(255);
 					bottomWords.get(i).hasMatched = true;
-					System.out.println("funciona");
+//					System.out.println("funciona");
 				}
 			}
 		}
@@ -171,18 +169,14 @@ public class Principal extends PApplet {
 				fill(255, 255, 255);
 				textSize(14);
 				text("GUARDAR", 679, 681);
-				
-				if(mousePressed && mouseX > 603 && mouseX < 752 && mouseY > 656 && mouseY < 694)
-				{
-					savedWords = bottomWords.get(i).getValue();
-					newWords = split(savedWords, ' ');
-					saveStrings("newStrings.txt", newWords);
-					
-//					otherWords = words.get(i).getValue();
-//					olderWords = split(otherWords, ' ');
-//					saveStrings("newStrings.txt", olderWords);
-					
+	
+				savedWords = bottomWords.get(i).getValue().toUpperCase();
+				newWords = split(savedWords, ' ');
 
+				if(mousePressed && mouseX > 603 && mouseX < 752 && mouseY > 656 && mouseY < 694)
+				{	
+					saveStrings("newStrings.txt", newWords);
+	
 					exit();
 				}
 			}
