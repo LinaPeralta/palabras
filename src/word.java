@@ -6,8 +6,9 @@ public class word
 	private String value;
 	boolean isActive;
 	private int r, g, b;
+	private int innerPosition;
 	
-	public word(int posX, int posY, String value) 
+	public word(int posX, int posY, String value, int innerPosition) 
 	{
 		this.posX = posX;
         this.posY = posY;
@@ -18,6 +19,8 @@ public class word
         r = 0;
         g = 0;
         b = 0;
+        
+        this.innerPosition = innerPosition;
 	}
 	
 	public void paint(PApplet app)
@@ -83,5 +86,15 @@ public class word
 	public void setG(int g) {
 		this.g = g;
 	}
+
+	public int getInnerPosition() {
+		return innerPosition;
+	}
+
+	public void setInnerPosition(int innerPosition) {
+		this.innerPosition = innerPosition;
+	}
+	
+	
 	
 }

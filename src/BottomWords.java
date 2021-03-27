@@ -6,9 +6,9 @@ public class BottomWords
 	private String value;
 	boolean isActive, hasMatched;
 	private int r, g, b;
+	private int innerPosition;
 	
-	
-	public BottomWords(int posX, int posY, String value) 
+	public BottomWords(int posX, int posY, String value, int innerPosition) 
 	{
 		this.posX = posX;
         this.posY = posY;
@@ -20,6 +20,8 @@ public class BottomWords
         r = 0;
         g = 0;
         b = 0;
+        
+        this.innerPosition = innerPosition;
 	}
 
 	public void paint(PApplet app)
@@ -84,6 +86,15 @@ public class BottomWords
 	public void setValue(String value) {
 		this.value = value;
 	}
+
+	public int getInnerPosition() {
+		return innerPosition;
+	}
+
+	public void setInnerPosition(int innerPosition) {
+		this.innerPosition = innerPosition;
+	}
+	
 	
 	
 }

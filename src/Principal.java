@@ -1,3 +1,4 @@
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
@@ -22,18 +23,35 @@ public class Principal extends PApplet {
 	float randomNum, randomNum1, randomNum2, randomNum3;
 
 	int counter;
+	
+	int estado = 0;
 
 	boolean equalsTrue;
 	
-	String savedWords;
+	PrintWriter output;
+	
+	String savedWords = "funciona";
 	String[] newWords;
+
 
 	@Override
 	public void setup() // void Start
-	{	
+	{
+		
+		newWords = split(savedWords, ' ');
+		
+		
 		texts = loadStrings("strings.txt");
 		words = new ArrayList<word>();
 		bottomWords = new ArrayList<BottomWords>();
+		
+		
+//		for (int i = 0; i < bottomWords.size(); i++) {
+//			
+//			newWords = split(bottomWords.get(i).getValue(), ' ');
+//			
+//		}
+
 
 		randomNum = (int) random(0, 50);
 		randomNum1 = (int) random(0, 50);
@@ -48,14 +66,15 @@ public class Principal extends PApplet {
 			String[] arrayWords = texts[i].split(" ");
 			for (int j = 0; j < arrayWords.length; j++) 
 			{
-				words.add(new word((int) random(780), (int) random(-880, 0), arrayWords[j]));
+				words.add(new word((int) random(780), (int) random(-880, 0), arrayWords[j], j));
 			}			
 		}
 		
 		for (int j = 0; j < 4; j++) 
 		{
 			int randomNumber = (int) random(0, words.size() - 1);
-			bottomWords.add(new BottomWords(50 * j + 100, 680, words.get(randomNumber).getValue()));
+			bottomWords.add(new BottomWords(50 * j + 100, 680, words.get(randomNumber).getValue(), j));
+			savedWords = bottomWords.get(j).getValue();
 		}
 
 
@@ -109,18 +128,22 @@ public class Principal extends PApplet {
 		
 		match();
 		saveWords();
-		System.out.println(savedWords);
+		
+		
 	}
+
 
 	public void mousePressed() 
 	{
 		for (int i = 0; i < bottomWords.size(); i++) {
 			if (dist(mouseX, mouseY, bottomWords.get(i).getPosX(), bottomWords.get(i).getPosY()) < 10 && mousePressed) 
 			{
-				bottomWords.get(i).isActive = true;
+			    bottomWords.get(i).isActive = true;
 				circle(bottomWords.get(i).getPosX(), bottomWords.get(i).getPosY(), 20);
 			}
 		}
+		
+		sensible();
 	}
 
 	public void mouseDragged() 
@@ -139,6 +162,7 @@ public class Principal extends PApplet {
 		}
 	}
 	
+	
 	public void match()
 	{
 		for(int i = 0; i < bottomWords.size(); i++)
@@ -151,7 +175,7 @@ public class Principal extends PApplet {
 					words.get(j).setR(255);
 					bottomWords.get(i).setR(255);
 					bottomWords.get(i).hasMatched = true;
-//					System.out.println("funciona");
+					//System.out.println("funciona");
 				}
 			}
 		}
@@ -169,17 +193,56 @@ public class Principal extends PApplet {
 				fill(255, 255, 255);
 				textSize(14);
 				text("GUARDAR", 679, 681);
-	
-				savedWords = bottomWords.get(i).getValue().toUpperCase();
-				newWords = split(savedWords, ' ');
-
-				if(mousePressed && mouseX > 603 && mouseX < 752 && mouseY > 656 && mouseY < 694)
-				{	
-					saveStrings("newStrings.txt", newWords);
-	
-					exit();
-				}
+				
+				
 			}
+		}
+	}
+	
+	public void sensible() {
+		
+		if(mousePressed && mouseX > 603 && mouseX < 752 && mouseY > 656 && mouseY < 694)
+		{
+          //  bottomWords = savedWords;
+			String[] prueba = {"hola"};
+		//		System.out.println(bottomWords.get(0).getValue());
+			String[] boxWords;
+			String[] allTheOtherWords;
+			boxWords =  new String [words.size()];
+			allTheOtherWords = new String [words.size()];
+			
+			for (int i = 0; i < bottomWords.size(); i++) 
+			{
+				//boxWords[i]= bottomWords.get(i).getValue().toUpperCase();
+				
+				for(int j = 0; j < words.size(); j++)
+				{
+					//allTheOtherWords[j] = words.get(j).getValue().toLowerCase();
+					
+					if(bottomWords.get(i).getInnerPosition() == words.get(j).getInnerPosition())
+					{
+//						words.remove(j);
+//						boxWords[j] = words.get(j).getValue().toLowerCase();
+						System.out.println(words.get(j).getInnerPosition());
+						System.out.println(bottomWords.get(i).getInnerPosition());
+						System.out.println("------------------------");
+					}
+					else
+					{
+						boxWords[j] = words.get(j).getValue().toUpperCase();
+					}
+				}
+				
+				saveStrings("newStrings.txt", boxWords);
+			}
+			
+//			System.out.println(boxWords[0]);
+//			System.out.println(boxWords[1]);
+//			System.out.println(boxWords[2]);
+//			System.out.println(boxWords[3]);
+			
+
+			exit();
 		}
 	}
 }
