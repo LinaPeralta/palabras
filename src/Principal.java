@@ -45,12 +45,6 @@ public class Principal extends PApplet {
 		words = new ArrayList<word>();
 		bottomWords = new ArrayList<BottomWords>();
 		
-		
-//		for (int i = 0; i < bottomWords.size(); i++) {
-//			
-//			newWords = split(bottomWords.get(i).getValue(), ' ');
-//			
-//		}
 
 
 		randomNum = (int) random(0, 50);
@@ -66,14 +60,15 @@ public class Principal extends PApplet {
 			String[] arrayWords = texts[i].split(" ");
 			for (int j = 0; j < arrayWords.length; j++) 
 			{
-				words.add(new word((int) random(780), (int) random(-880, 0), arrayWords[j], j));
+				words.add(new word((int) random(780), (int) random(-880, 0), arrayWords[j], i));
 			}			
 		}
 		
+		//primer cambio >>>>>
 		for (int j = 0; j < 4; j++) 
 		{
 			int randomNumber = (int) random(0, words.size() - 1);
-			bottomWords.add(new BottomWords(50 * j + 100, 680, words.get(randomNumber).getValue(), j));
+			bottomWords.add(new BottomWords(50 * j + 100, 680, words.get(randomNumber).getValue(), randomNumber));
 			savedWords = bottomWords.get(j).getValue();
 		}
 
@@ -135,6 +130,10 @@ public class Principal extends PApplet {
 
 	public void mousePressed() 
 	{
+		
+		
+		
+		
 		for (int i = 0; i < bottomWords.size(); i++) {
 			if (dist(mouseX, mouseY, bottomWords.get(i).getPosX(), bottomWords.get(i).getPosY()) < 10 && mousePressed) 
 			{
@@ -211,37 +210,20 @@ public class Principal extends PApplet {
 			boxWords =  new String [words.size()];
 			allTheOtherWords = new String [words.size()];
 			
-			for (int i = 0; i < bottomWords.size(); i++) 
+			//eliminar las de abajo en la canción original
+			for(int j = 0; j < bottomWords.size(); j++)
 			{
-				//boxWords[i]= bottomWords.get(i).getValue().toUpperCase();
-				
-				for(int j = 0; j < words.size(); j++)
-				{
-					//allTheOtherWords[j] = words.get(j).getValue().toLowerCase();
-					
-					if(bottomWords.get(i).getInnerPosition() == words.get(j).getInnerPosition())
-					{
-//						words.remove(j);
-//						boxWords[j] = words.get(j).getValue().toLowerCase();
-						System.out.println(words.get(j).getInnerPosition());
-						System.out.println(bottomWords.get(i).getInnerPosition());
-						System.out.println("------------------------");
-					}
-					else
-					{
-						boxWords[j] = words.get(j).getValue().toUpperCase();
-					}
-				}
-				
-				saveStrings("newStrings.txt", boxWords);
+				words.remove(bottomWords.get(j).getInnerPosition());
+				boxWords[j]= bottomWords.get(j).getValue().toUpperCase();
+				System.out.println(words.size());
 			}
 			
-//			System.out.println(boxWords[0]);
-//			System.out.println(boxWords[1]);
-//			System.out.println(boxWords[2]);
-//			System.out.println(boxWords[3]);
 			
-
+			for (int i = 0; i < words.size(); i++) 
+			{
+				boxWords[i+4]= words.get(i).getValue(); 
+			}
+			saveStrings("newStrings.txt", boxWords);
 			exit();
 		}
 	}
